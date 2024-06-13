@@ -9,8 +9,9 @@ import (
 	"net/http"
 )
 
-func (C *Config) Token(Code string) (Token, error) {
-	req, err := http.NewRequest("POST", "https://apis.roblox.com/oauth/v1/token", bytes.NewBuffer([]byte(fmt.Sprintf(`client_id=%v&client_secret=%v&grant_type=authorization_code&code=%v`, C.ClientID, C.ClientSecret, Code))))
+func (C *Config) Token(Code, Verifier string) (Token, error) {
+
+	req, err := http.NewRequest("POST", "https://apis.roblox.com/oauth/v1/token", bytes.NewBuffer([]byte(fmt.Sprintf(`client_id=%v&code_verifier=%v&client_secret=%v&grant_type=authorization_code&code=%v`, C.ClientID, Verifier, C.ClientSecret, Code))))
 	if err != nil {
 		return Token{}, err
 	}
